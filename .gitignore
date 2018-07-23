@@ -1,6 +1,15 @@
 # Compiled class file
 *.class
 
+# maven created directory and fies
+/target
+
+# ignore created ideal directory
+/.idea
+
+# ignore created idal file
+*.iml
+
 # Log file
 *.log
 
