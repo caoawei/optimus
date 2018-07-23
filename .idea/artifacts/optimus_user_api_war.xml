@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="optimus-user-api:war">
+    <output-path>$PROJECT_DIR$/optimus-user/optimus-user-api/target</output-path>
+    <root id="archive" name="optimus-user-api-1.0.war">
+      <element id="artifact" artifact-name="optimus-user-api:war exploded" />
+    </root>
+  </artifact>
+</component>

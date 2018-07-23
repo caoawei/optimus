@@ -1,0 +1,200 @@
+
+   ---------------------------------------------------------------------------------------------------------------------
+   /////////////////////////////////////////////桥接方法: Bridge method//////////////////////////////////////////////////
+   ---------------------------------------------------------------------------------------------------------------------
+
+   什么是桥接方法? 根据JVM规范(https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.6)的描述是:
+   桥接方法是由编译器生成.
+
+   桥接方法是 JDK 1.5 引入泛型后，为了使 Java 的范型方法生成的字节码和 1.5 版本前的字节码
+   相兼容，由编译器自动生成的方法。
+
+   编译器什么时候会生成桥接方法呢?
+
+   目前只知道实现泛型接口的类编译器会生成桥接方法
+
+   例如:
+   ---------------------------------------------------------------------------------------------------------------------
+   |public class StringTest implements Test<String> {
+   |    //Test类是泛型类或接口:public class Test<T>{// 方法参数含有T}
+   |    @Override
+   |    public String get() {
+   |        return null;
+   |    }
+   |
+   |    @Override
+   |    public void add(String s) {
+   |
+   |    }
+   |}
+   ---------------------------------------------------------------------------------------------------------------------
+
+   测试代码:
+   ---------------------------------------------------------------------------------------------------------------------
+   |    Method[] methods = StringTest.class.getDeclaredMethods();
+   |    for (Method m : methods){
+   |        Class[] cld = m.getParameterTypes();
+   |        StringBuilder out = new StringBuilder(m.getName()).append("(");
+   |        for (Class cl : cld){
+   |            out.append(cl.getSimpleName()).append(",");
+   |        }
+   |
+   |        int index = out.lastIndexOf(",");
+   |        if(index != -1){
+   |            out.replace(index,index+1,"");
+   |        }
+   |        out.append(")");
+   |        System.out.println(out+"------isBridge:"+m.isBridge()+"------isSynthetic:"+m.isSynthetic());
+   |    }
+   ---------------------------------------------------------------------------------------------------------------------
+
+
+   输出结果:
+   |--------------------------------------------------------------------------------------------------------------------
+   |    add(Object)------isBridge:true------isSynthetic:true       --// 编译器生成
+   |    add(String)------isBridge:false------isSynthetic:false
+   |    get()------isBridge:false------isSynthetic:false
+   |    get()------isBridge:true------isSynthetic:true             --// 编译器生成
+   ---------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+   查看字节码
+   ---------------------------------------------------------------------------------------------------------------------
+   通过命令:   javap -v StringTest.class
+   ---------------------------------------------------------------------------------------------------------------------
+    public java.lang.String get();
+      descriptor: ()Ljava/lang/String;
+      flags: ACC_PUBLIC
+      Code:
+        stack=1, locals=1, args_size=1
+           0: aconst_null
+           1: areturn
+        LineNumberTable:
+          line 9: 0
+        LocalVariableTable:
+          Start  Length  Slot  Name   Signature
+              0       2     0  this   Lcom/optimus/utils/StringTest;
+
+    public void add(java.lang.String);
+      descriptor: (Ljava/lang/String;)V
+      flags: ACC_PUBLIC
+      Code:
+        stack=0, locals=2, args_size=2
+           0: return
+        LineNumberTable:
+          line 15: 0
+        LocalVariableTable:
+          Start  Length  Slot  Name   Signature
+              0       1     0  this   Lcom/optimus/utils/StringTest;
+              0       1     1     s   Ljava/lang/String;
+
+
+    public void add(java.lang.Object);
+      descriptor: (Ljava/lang/Object;)V
+      flags: ACC_PUBLIC, ACC_BRIDGE, ACC_SYNTHETIC // ACC_BRIDGE:桥接方法的标志,此时通过Method.isBridge()返回true
+      Code:
+        stack=2, locals=2, args_size=2
+           0: aload_0
+           1: aload_1
+           2: checkcast     #2     // class java/lang/String
+           5: invokevirtual #3     // Method add:(Ljava/lang/String;)V --桥接方法中调用了实际的方法(出现在源代码中的方法)
+           8: return
+        LineNumberTable:
+          line 6: 0
+        LocalVariableTable:
+          Start  Length  Slot  Name   Signature
+              0       9     0  this   Lcom/optimus/utils/StringTest;
+
+    public java.lang.Object get();
+      descriptor: ()Ljava/lang/Object;
+      flags: ACC_PUBLIC, ACC_BRIDGE, ACC_SYNTHETIC
+      Code:
+        stack=1, locals=1, args_size=1
+           0: aload_0
+           1: invokevirtual #4   // Method get:()Ljava/lang/String; --桥接方法中调用了 实际的方法(出现在源代码中的方法)
+           4: areturn
+        LineNumberTable:
+          line 6: 0
+        LocalVariableTable:
+          Start  Length  Slot  Name   Signature
+              0       5     0  this   Lcom/optimus/utils/StringTest;
+
+    --------------------------------------------------------------------------------------------------------------------
+
+
+    由字节应该可以知道:
+    Test test = new StringTest();
+    test.add("123"); // 实际调用的是StringTest.add(String)方法
+    test.add(new Object()) // 调用的是桥接方法,因桥接方法中会调用实际方法,因此调用会抛出类型转换异常
+
+    对于泛型接口而言，参数的不确定性，是编译器生成桥接方法的原因，因为接口的对外的使用方式是统一的，不同的只是实现，
+    因此在实现类中要生成桥接方法，以适应通过接口的调用，
+    在运行时通过动态绑定获知具体类型，进行参数强转调用实现类的方法。若没有桥接接口，编译期检查应当都不会通过的。
+
+    这里所讨论的泛型不是<T extends TestClass> 这种形式的，因为这种形式是可以确定参数类型，编译后参数的类型就是 TestClass
+
+
+    至于Synthetic标识,标识代码是由编译器生成而非由源码(程序员所写)编译:
+    按此说法 动态代理,内部类,泛型接口实现类等均会有此标识,本人只测试了泛型接口实现类和内部类,结果是如此。
+
+
+
+
+    --------------------------------------------------------------------------------------------------------------------
+    ///////////////////////////////////////////////////资源搜索//////////////////////////////////////////////////////////
+    --------------------------------------------------------------------------------------------------------------------
+
+    --------------------------------------------------------------------------------------------------------------------
+    |Class.getResource(String name) vs Class.getResourceAsStream(String name)
+    --------------------------------------------------------------------------------------------------------------------
+    |两者的搜索路径相同,具体如下:
+    |name以'/'开始,则是从classpath下进行搜索
+    |name不以'/'开始,则是根据当前class对象包名所表示的路径下搜索:
+    |(eg: com.cgtz.optimus.test.Test.class,搜索路径为:com/cgtz/optimus/test/name)
+    |
+    |两者方法内部在进行搜索前会调用 resolveName()方法:
+    |-------------------------------------------------------------------------------------------------------------------
+    |private String resolveName(String name) {
+    |    if (name == null) {
+    |        return name;
+    |    }
+    |    if (!name.startsWith("/")) {
+    |        Class<?> c = this;
+    |        while (c.isArray()) {
+    |            c = c.getComponentType();
+    |        }
+    |        String baseName = c.getName();
+    |        int index = baseName.lastIndexOf('.');
+    |        if (index != -1) {
+    |            name = baseName.substring(0, index).replace('.', '/')
+    |                    +"/"+name;
+    |        }
+    |    } else {
+    |        name = name.substring(1);
+    |    }
+    |    return name;
+    |}
+    --------------------------------------------------------------------------------------------------------------------
+
+
+
+    --------------------------------------------------------------------------------------------------------------------
+    |ClassLoader.getResource(String name) vs ClassLoader.getResourceAsStream(String name)
+    --------------------------------------------------------------------------------------------------------------------
+    |
+    |两者搜索路径亦是相同,与Class中的不同,ClassLoader是在classpath下开始搜索,即name不能以'/'开头,否则返回的永远是Null
+    |
+    |其实上述Class的两个方法内部是先进行resolveName(), 然后调用ClassLoader.getResource或ClassLoader.getResourceAsStream
+    --------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+

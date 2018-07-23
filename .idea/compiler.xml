@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="optimus-admin" />
+        <module name="optimus-colt" />
+        <module name="optimus-common" />
+        <module name="optimus-courier" />
+        <module name="optimus-redis" />
+        <module name="optimus-user-api" />
+        <module name="optimus-user-impl" />
+        <module name="optimus-user-interface" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="optimus-admin" target="1.8" />
+      <module name="optimus-colt" target="1.8" />
+      <module name="optimus-common" target="1.8" />
+      <module name="optimus-courier" target="1.8" />
+      <module name="optimus-parent" target="1.8" />
+      <module name="optimus-redis" target="1.8" />
+      <module name="optimus-user" target="1.8" />
+      <module name="optimus-user-api" target="1.8" />
+      <module name="optimus-user-impl" target="1.8" />
+      <module name="optimus-user-interface" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

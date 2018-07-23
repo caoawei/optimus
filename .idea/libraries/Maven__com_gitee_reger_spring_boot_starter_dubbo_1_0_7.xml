@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.gitee.reger:spring-boot-starter-dubbo:1.0.7">
+    <CLASSES>
+      <root url="jar://D:/apache-maven-3.3.3/rpo-optimus/com/gitee/reger/spring-boot-starter-dubbo/1.0.7/spring-boot-starter-dubbo-1.0.7.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://D:/apache-maven-3.3.3/rpo-optimus/com/gitee/reger/spring-boot-starter-dubbo/1.0.7/spring-boot-starter-dubbo-1.0.7-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://D:/apache-maven-3.3.3/rpo-optimus/com/gitee/reger/spring-boot-starter-dubbo/1.0.7/spring-boot-starter-dubbo-1.0.7-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

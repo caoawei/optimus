@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<redis>
+    <!-- 主节点1 -->
+    <node host="127.0.0.1" port="6379" readOnly="false">
+        <!-- 主节点1的从节点 -->
+        <slave host="127.0.0.1" port="6380" readOnly="true"/>
+    </node>
+    <!-- 主节点2 -->
+    <node host="127.0.0.1" port="6479" readOnly="false">
+        <slave host="127.0.0.1" port="6480" readOnly="true"/>
+    </node>
+</redis>
