@@ -2,10 +2,10 @@
 *.class
 
 # maven created directory and fies
-/target
+target/*
 
 # ignore created ideal directory
-/.idea
+.idea/*
 
 # ignore created idal file
 *.iml
