@@ -53,6 +53,7 @@
         <module>optimus-colt</module>
         <module>optimus-courier</module>
         <module>optimus-reptile</module>
+        <module>optimus-log</module>
     </modules>
 
     <!--<repositories>-->
