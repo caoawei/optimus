@@ -26,7 +26,7 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
     @ExceptionHandler
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         JsonResult jr = JsonResultFactory.create(ex);
-        String rs = Utils.toJson(jr);
+        String rs = "";//Utils.toJson(jr);
         try {
             response.setCharacterEncoding("utf-8");
             response.setContentType("text/html;charset=utf-8");

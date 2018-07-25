@@ -1,6 +1,8 @@
 package com.optimus.utils;
 
-import com.alibaba.fastjson.JSON;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.optimus.common.exception.BizException;
 import org.springframework.util.ReflectionUtils;
 
@@ -11,7 +13,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 /**
  * Created by Administrator on 2018/3/22.
@@ -19,6 +20,18 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 public class Utils {
 
     private static final String BLANK = "";
+    private static final GsonBuilder GSON_BUILDER;
+    private static final String DEFALUT_JSON_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+    static {
+        GSON_BUILDER = new GsonBuilder();
+        GSON_BUILDER.enableComplexMapKeySerialization();
+        GSON_BUILDER.serializeNulls();
+        GSON_BUILDER.setDateFormat(DEFALUT_JSON_DATE_FORMAT);
+        GSON_BUILDER.setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE);
+        GSON_BUILDER.setPrettyPrinting();
+        GSON_BUILDER.setVersion(1.0);
+    }
 
     public static boolean isEmpty(String input){
         return input == null || input.matches("\\s*") || input.trim().equals("null");
@@ -115,17 +128,13 @@ public class Utils {
     }
 
     public static String toJson(Object input){
-        if(input == null){
-            return "";
-        }
-        return JSON.toJSONString(input);
+        Gson gson = createGson();
+        return gson.toJson(gson);
     }
 
-    public static <T> T fromJson(String input,Class<T> type){
-        if(isEmpty(input)){
-            return null;
-        }
-        return JSON.parseObject(input,type);
+    public static <T> T fromJson(String input,Class<T> type) {
+        Gson gson = createGson();
+        return gson.fromJson(input,type);
     }
 
     public static List<String> string2List(String str,String delimit,boolean isTrime) {
@@ -144,5 +153,9 @@ public class Utils {
             }
         }
         return rs;
+    }
+
+    private static final Gson createGson() {
+        return GSON_BUILDER.create();
     }
 }

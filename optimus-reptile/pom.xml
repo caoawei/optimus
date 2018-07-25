@@ -20,24 +20,5 @@
             <artifactId>optimus-common</artifactId>
             <version>1.0</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.github.romewing</groupId>
-            <artifactId>webmagic-spring-boot-starter</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>us.codecraft</groupId>
-            <artifactId>webmagic-core</artifactId>
-            <version>0.7.3</version>
-        </dependency>
-        <dependency>
-            <groupId>us.codecraft</groupId>
-            <artifactId>webmagic-extension</artifactId>
-            <version>0.7.3</version>
-        </dependency>
-
-
-
     </dependencies>
 </project>

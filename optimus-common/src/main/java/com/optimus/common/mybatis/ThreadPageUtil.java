@@ -1,7 +1,6 @@
 package com.optimus.common.mybatis;
 
 import com.optimus.common.constant.DubboKey;
-import com.optimus.utils.DubboUtil;
 
 public class ThreadPageUtil {
 
@@ -9,9 +8,9 @@ public class ThreadPageUtil {
 
     public static PageParam getPageParam(){
         PageParam pageParam = pageParamContainer.get();
-        if(pageParam == null){
-            pageParam = DubboUtil.getPageParam(DubboKey.Page_List);
-        }
+//        if(pageParam == null){
+//            pageParam = DubboUtil.getPageParam(DubboKey.Page_List);
+//        }
 
         return pageParam;
     }
@@ -21,12 +20,12 @@ public class ThreadPageUtil {
             pageParam = PageParam.initWithOffset(-1,-1);
         }
         pageParamContainer.set(pageParam);
-        DubboUtil.setPageParam(pageParam);
+//        DubboUtil.setPageParam(pageParam);
     }
 
     public static void removePageParam(){
         pageParamContainer.remove();
-        DubboUtil.removeAttachment(DubboKey.Page_List.getKey());
+//        DubboUtil.removeAttachment(DubboKey.Page_List.getKey());
     }
 
 }

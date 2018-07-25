@@ -39,7 +39,7 @@ public class JsonResultReturnValueHandler implements HandlerMethodReturnValueHan
 
     private void writeWithMessageConverters(Object returnValue, MethodParameter returnType, HttpServletRequest request, HttpServletResponse response) {
         JsonResult jr = JsonResultFactory.create(returnValue);
-        String rs = Utils.toJson(jr);
+        String rs = ""; //Utils.toJson(jr);
         String encoding = request.getCharacterEncoding();
         try {
             response.setCharacterEncoding(encoding);

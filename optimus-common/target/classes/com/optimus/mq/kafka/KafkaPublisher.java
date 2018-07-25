@@ -42,7 +42,7 @@ public class KafkaPublisher {
             // 当前系统环境(考虑到实际多套环境版本不尽相同)
             String env = ConfigUtil.getConfig("mq.kafka.env","");
             String topic = env + "-" + topicType.getTopic();
-            String data = Utils.toJson(message);
+            String data = ""; //Utils.toJson(message);
             ProducerRecord<String,byte[]> record = new ProducerRecord<String, byte[]>(topic,data.getBytes("utf-8"));
 
             logger.info("[kafka 开始发布消息.....]");
