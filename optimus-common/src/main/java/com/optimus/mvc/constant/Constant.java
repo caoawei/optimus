@@ -29,5 +29,5 @@ public class Constant {
     /**
      * 存储在Request.getAttribute()实际页面路径的属性名称
      */
-    public static final String VIEW_ATTR_NAME = "com.luntan.module.web.screen";
+    public static final String VIEW_ATTR_NAME = "com.luntan.module.web.service";
 }

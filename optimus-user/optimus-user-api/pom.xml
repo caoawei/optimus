@@ -19,11 +19,6 @@
         </dependency>
         <dependency>
             <groupId>optimus-group</groupId>
-            <artifactId>optimus-user-impl</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>optimus-group</groupId>
             <artifactId>optimus-common</artifactId>
             <version>1.0</version>
         </dependency>
