@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import java.lang.reflect.Field;
 import java.util.List;
 
-@Component
+//@Component
 public class ApplicationContextExtension implements BeanFactoryPostProcessor {
 
     private static final Logger logger = LoggerFactory.getLogger(ApplicationContextExtension.class);
