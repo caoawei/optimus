@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * 账户ao
  */
 @FeignClient("user")
+@RequestMapping("/user")
 public interface AccountApi {
 
-    @RequestMapping("/select")
+    @RequestMapping("/select.json")
     UserInfo select();
 }
