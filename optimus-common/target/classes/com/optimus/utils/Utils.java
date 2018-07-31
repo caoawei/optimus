@@ -3,6 +3,8 @@ package com.optimus.utils;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapter;
+import com.google.gson.internal.bind.TypeAdapters;
 import com.optimus.common.exception.BizException;
 import org.springframework.util.ReflectionUtils;
 
@@ -24,13 +26,8 @@ public class Utils {
     private static final String DEFALUT_JSON_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     static {
-        GSON_BUILDER = new GsonBuilder();
-        GSON_BUILDER.enableComplexMapKeySerialization();
-        GSON_BUILDER.serializeNulls();
-        GSON_BUILDER.setDateFormat(DEFALUT_JSON_DATE_FORMAT);
-        GSON_BUILDER.setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE);
-        GSON_BUILDER.setPrettyPrinting();
-        GSON_BUILDER.setVersion(1.0);
+        GSON_BUILDER = new Gson().newBuilder();
+        GSON_BUILDER.setDateFormat("yyyy-MM-dd HH:mm:ss");
     }
 
     public static boolean isEmpty(String input){
@@ -129,7 +126,7 @@ public class Utils {
 
     public static String toJson(Object input){
         Gson gson = createGson();
-        return gson.toJson(gson);
+        return gson.toJson(input);
     }
 
     public static <T> T fromJson(String input,Class<T> type) {

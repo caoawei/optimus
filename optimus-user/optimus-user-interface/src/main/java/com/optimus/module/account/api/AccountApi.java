@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * 账户ao
  */
-@FeignClient("user")
-@RequestMapping("/user")
+@FeignClient("optimus-user")
+@RequestMapping("/account/account_api")
 public interface AccountApi {
 
-    @RequestMapping("/select.json")
+    @RequestMapping("select.json")
     UserInfo select();
 }

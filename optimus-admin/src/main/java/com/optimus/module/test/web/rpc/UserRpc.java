@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by  on 2018/7/27.
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/account/user")
 public class UserRpc {
 
     @Autowired
-    private TestApi accountApi;
+    private AccountApi accountApi;
 
     @RequestMapping("/select.json")
     public UserInfo select() {
