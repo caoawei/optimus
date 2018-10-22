@@ -2,9 +2,12 @@ package com.optimus.express;
 
 import com.optimus.collection.Stack;
 import com.optimus.collection.impl.ArrayStack;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ExpressFactory {
 
+    Logger logger = LoggerFactory.getLogger(ExpressFactory.class);
     public static void main(String[] args) {
 
         String exp = "#{one} * (#{two} + #{three} )";
