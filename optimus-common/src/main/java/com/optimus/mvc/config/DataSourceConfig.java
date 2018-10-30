@@ -121,6 +121,7 @@ public class DataSourceConfig {
         for (Map.Entry<Object,Object> entry : rs.entrySet()){
             BasicDataSource bds = (BasicDataSource) entry.getValue();
             bds.setInitialSize(20);
+            bds.setMaxActive(100);
             bds.setDefaultAutoCommit(false);
         }
     }
