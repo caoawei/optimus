@@ -2,6 +2,7 @@ package com.optimus.module.order.dal.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.xml.crypto.Data;
 
 public class Order implements Serializable {
     /**
@@ -185,4 +186,5 @@ public class Order implements Serializable {
     public void setGmtModify(Date gmtModify) {
         this.gmtModify = gmtModify;
     }
+
 }

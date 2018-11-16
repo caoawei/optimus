@@ -16,11 +16,20 @@ public class EncryptUtil {
 
     private static String PASSWORD = md5(EncryptUtil.class.getName()).substring(0,16);
 
-    public static String md5(String text){
+    public static byte[] nativeMd5(String text) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(text == null ? "".getBytes() : text.getBytes("utf-8"));
             byte[] b = md.digest();
+            return b;
+        } catch (Exception e) {
+            throw new BizException("MD5加密失败.",e);
+        }
+    }
+
+    public static String md5(String text){
+        try {
+            byte[] b = nativeMd5(text);
             return encodeHex(b);
         } catch (Exception e) {
             throw new BizException("MD5加密失败.",e);
@@ -73,7 +82,7 @@ public class EncryptUtil {
     }
 
     private static String encodeHex(byte[] data){
-        StringBuffer rs = new StringBuffer("");
+        StringBuffer rs = new StringBuffer();
         for (int offset = 0; offset < data.length; offset++) {
             int i = data[offset];
             if (i < 0){
