@@ -10,7 +10,7 @@ public enum LinkTraceType {
     HTTP_SERVER("http_server","HTTP服务端"),
     MQ_CONSUMER("mq_consumer","MQ消费者"),
     MQ_PRODUCER("mq_producer","MQ生产者"),
-    RPC_CONSUMER("rpc_producer","RPC服务消费者"),
+    RPC_CONSUMER("rpc_consumer","RPC服务消费者"),
     RPC_PROVIDER("rpc_provider","RPC服务提供者"),
     SQL("sql","数据库"),
 
